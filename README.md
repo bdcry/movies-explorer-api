@@ -1,1 +1,1 @@
-# movies-explorer-api
+# Backend дипломной работы Movies Explorer
