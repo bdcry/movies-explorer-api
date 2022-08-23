@@ -1,13 +1,67 @@
-// Поля схемы movie:
-// country — страна создания фильма. Обязательное поле-строка.
-// director — режиссёр фильма. Обязательное поле-строка.
-// duration — длительность фильма. Обязательное поле-число.
-// year — год выпуска фильма. Обязательное поле-строка.
-// description — описание фильма. Обязательное поле-строка.
-// image — ссылка на постер к фильму. Обязательное поле-строка. Запишите её URL-адресом.
-// trailerLink — ссылка на трейлер фильма. Обязательное поле-строка. Запишите её URL-адресом.
-// thumbnail — миниатюрное изображение постера к фильму. Обязательное поле-строка. Запишите её URL-адресом.
-// owner — _id пользователя, который сохранил фильм. Обязательное поле.
-// movieId — id фильма, который содержится в ответе сервиса MoviesExplorer. Обязательное поле.
-// nameRU — название фильма на русском языке. Обязательное поле-строка.
-// nameEN — название фильма на английском языке. Обязательное поле-строка.
+const mongoose = require('mongoose');
+
+const movieSchema = new mongoose.Schema({
+  country: {
+    type: String, // строка
+    required: [true, 'Это обязательное поле'], // обязательное поле
+  },
+  director: {
+    type: String, // строка
+    required: [true, 'Это обязательное поле'], // обязательное поле
+  },
+  duration: {
+    type: String, // строка
+    required: [true, 'Это обязательное поле'], // обязательное поле
+  },
+  year: {
+    type: Number,
+    required: [true, 'Это обязательное поле'], // обязательное поле
+  },
+  description: {
+    type: String, // строка
+    required: [true, 'Это обязательное поле'], // обязательное поле
+  },
+  image: {
+    type: String, // строка
+    required: [true, 'Это обязательное поле'], // обязательное поле
+    validate: {
+      validator: (v) => /(http:\/\/|https:\/\/)(www)*[a-z0-9\S]*/.test(v),
+      message: 'Cсылка не подходит :(',
+    },
+  },
+  trailerLink: {
+    type: String, // строка
+    required: [true, 'Это обязательное поле'], // обязательное поле
+    validate: {
+      validator: (v) => /(http:\/\/|https:\/\/)(www)*[a-z0-9\S]*/.test(v),
+      message: 'Cсылка не подходит :(',
+    },
+  },
+  thumbnail: {
+    type: String, // строка
+    required: [true, 'Это обязательное поле'], // обязательное поле
+    validate: {
+      validator: (v) => /(http:\/\/|https:\/\/)(www)*[a-z0-9\S]*/.test(v),
+      message: 'Cсылка не подходит :(',
+    },
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: [true, 'Это обязательное поле'], // обязательное поле
+  },
+  movieId: {
+    type: String, // строка
+    required: [true, 'Это обязательное поле'], // обязательное поле
+  },
+  nameRU: {
+    type: String, // строка
+    required: [true, 'Это обязательное поле'], // обязательное поле
+  },
+  nameEN: {
+    type: String, // строка
+    required: [true, 'Это обязательное поле'], // обязательное поле
+  },
+
+}, { versionKey: false });
+
+module.exports = mongoose.model('movie', movieSchema);
