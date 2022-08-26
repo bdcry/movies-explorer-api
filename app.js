@@ -1,14 +1,25 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const { errors } = require('celebrate');
+const bodyParser = require('body-parser');
 const moviesRouter = require('./routes/movies');
 const usersRouter = require('./routes/users');
-const { login, createUser } = require('./controllers/users');
+const auth = require('./middlewares/auth');
 const { validationCreateUser, validationLogin } = require('./middlewares/validation');
+const { login, createUser } = require('./controllers/users');
 const errorRouter = require('./routes/errors');
-// const auth = require('./middlewares/auth');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { corsRules } = require('./middlewares/cors');
 
 const { PORT = 3000 } = process.env;
 const app = express();
+
+app.use(requestLogger); // подключаем логгер запросов
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(corsRules);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -29,10 +40,13 @@ app.post('/signin', validationLogin, login);
 
 app.post('/signup', validationCreateUser, createUser);
 
-app.use('/movies', moviesRouter);
-app.use('/users', usersRouter);
-app.all('*', errorRouter);
+app.use('/', auth, moviesRouter);
+app.use('/', auth, usersRouter);
+app.all('*', auth, errorRouter);
 
+app.use(errorLogger); // подключаем логгер ошибок
+
+app.use(errors()); // обработчик ошибок celebrate
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла техническая чоколадка' : message });

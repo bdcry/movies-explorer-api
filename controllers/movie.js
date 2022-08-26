@@ -6,7 +6,7 @@ const BadRequest = require('../utils/errors/BadRequest'); // 400
 const NotFound = require('../utils/errors/NotFound'); // 404
 
 // good codes
-const CREATE_CODE = require('../utils/goodCodes'); // 201
+const { CORRECT_CODE, CREATE_CODE } = require('../utils/goodCodes'); // 200 201
 
 // создаёт фильм
 const createMovie = (req, res, next) => {
@@ -68,7 +68,7 @@ const getMovies = (req, res, next) => {
       if (!movies) {
         throw new NotFound('Данные не найдены');
       }
-      res.status(CREATE_CODE).send(movies);
+      res.status(CORRECT_CODE).send(movies);
     })
     .catch(next);
 };
@@ -85,7 +85,7 @@ const deleteMovie = (req, res, next) => {
     .then((movie) => {
       if (movie.owner.toString() === owner) {
         return Movie.findByIdAndRemove(movieId)
-          .then((deletedMovie) => res.status(CREATE_CODE).send(deletedMovie))
+          .then((deletedMovie) => res.status(CORRECT_CODE).send(deletedMovie))
           .catch(next);
       }
       throw new ForbiddenError('Действие недоступно');

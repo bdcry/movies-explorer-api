@@ -1,7 +1,8 @@
-const { JWT_SECRET, NODE_ENV } = process.env;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+
+const { JWT_SECRET, NODE_ENV } = process.env;
 
 // errors
 const BadRequest = require('../utils/errors/BadRequest'); // 400
@@ -10,7 +11,7 @@ const NotFound = require('../utils/errors/NotFound'); // 404
 const DuplicateConflictError = require('../utils/errors/DuplicateConflictError'); // 409
 
 // good codes
-const CORRECT_CODE = require('../utils/goodCodes'); // 200
+const { CORRECT_CODE, CREATE_CODE } = require('../utils/goodCodes'); // 200 201
 
 // Создаёт пользователя
 const createUser = (req, res, next) => {
@@ -28,7 +29,7 @@ const createUser = (req, res, next) => {
         name,
       })
         .then(() => {
-          res.status(CORRECT_CODE).send({
+          res.status(CREATE_CODE).send({
             email,
             name,
           });
@@ -53,7 +54,7 @@ const login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       // аутентификация успешна! пользователь в переменной user
-      const token = jwt.sign({ _id: user._id }, `${NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret'}`, { expiresIn: '7d' }); // создали токен
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret', { expiresIn: '7d' }); // создали токен
       res.status(CORRECT_CODE).send({ token });
     })
     .catch(() => {

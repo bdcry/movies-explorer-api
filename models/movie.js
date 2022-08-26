@@ -25,7 +25,7 @@ const movieSchema = new mongoose.Schema({
     type: String, // строка
     required: [true, 'Это обязательное поле'], // обязательное поле
     validate: {
-      validator: (v) => /(http:\/\/|https:\/\/)(www)*[a-z0-9\S]*/.test(v),
+      validator: (v) => /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.,~#?&//=!]*$)/.test(v),
       message: 'Cсылка не подходит :(',
     },
   },
@@ -33,7 +33,7 @@ const movieSchema = new mongoose.Schema({
     type: String, // строка
     required: [true, 'Это обязательное поле'], // обязательное поле
     validate: {
-      validator: (v) => /(http:\/\/|https:\/\/)(www)*[a-z0-9\S]*/.test(v),
+      validator: (v) => /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.,~#?&//=!]*$)/.test(v),
       message: 'Cсылка не подходит :(',
     },
   },
@@ -41,7 +41,7 @@ const movieSchema = new mongoose.Schema({
     type: String, // строка
     required: [true, 'Это обязательное поле'], // обязательное поле
     validate: {
-      validator: (v) => /(http:\/\/|https:\/\/)(www)*[a-z0-9\S]*/.test(v),
+      validator: (v) => /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.,~#?&//=!]*$)/.test(v),
       message: 'Cсылка не подходит :(',
     },
   },
