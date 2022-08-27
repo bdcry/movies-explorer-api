@@ -13,7 +13,7 @@ const DuplicateConflictError = require('../utils/errors/DuplicateConflictError')
 // good codes
 const { CORRECT_CODE, CREATE_CODE } = require('../utils/goodCodes'); // 200 201
 
-// Создаёт пользователя
+// cоздаёт пользователя
 module.exports.createUser = (req, res, next) => {
   const { email, password, name } = req.body;
 
@@ -48,7 +48,7 @@ module.exports.createUser = (req, res, next) => {
     .catch(next);
 };
 
-// Авторизация
+// авторизация
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
@@ -67,14 +67,14 @@ module.exports.login = (req, res, next) => {
     });
 };
 
-// Возвращает информацию о пользователе
+// возвращает информацию о пользователе
 module.exports.getUserAbout = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => res.status(CORRECT_CODE).send(user))
     .catch(next);
 };
 
-// Обновляет информацию о пользователе
+// обновляет информацию о пользователе
 module.exports.patchUserProfile = (req, res, next) => {
   const { name, email } = req.body;
 

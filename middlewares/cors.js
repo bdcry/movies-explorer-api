@@ -1,4 +1,4 @@
-// Массив доменов, с которых разрешены кросс-доменные запросы
+// массив доменов, с которых разрешены кросс-доменные запросы
 const allowedCors = [
   'http://localhost:3000',
   'https://api.awesomemoviesexplorer.students.nomoredomains.sbs/',

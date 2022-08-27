@@ -3,10 +3,10 @@ const { validationPatchUserProfile } = require('../middlewares/validation');
 
 const { patchUserProfile, getUserAbout } = require('../controllers/users');
 
-// Получить свои данные
+// получить свои данные
 usersRouter.get('/me', getUserAbout);
 
-// Обновить профиль Юзера
+// обновить профиль юзера
 usersRouter.patch('/me', validationPatchUserProfile, patchUserProfile);
 
 module.exports = usersRouter;
