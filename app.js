@@ -45,6 +45,7 @@ app.use(error); // собственный обработчик ошибок
 mongoose.connect(MoviesExplorerdb, () => {
   console.log(`Connect DB to ${MoviesExplorerdb}`);
 });
+
 app.listen(PORT, () => {
   console.log(`Start Server:${PORT}`);
 });
