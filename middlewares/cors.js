@@ -1,5 +1,11 @@
 // Массив доменов, с которых разрешены кросс-доменные запросы
-const allowedCors = ['http://localhost:3000'];
+const allowedCors = [
+  'http://localhost:3000',
+  'https://api.awesomemoviesexplorer.students.nomoredomains.sbs/',
+  'http://api.awesomemoviesexplorer.students.nomoredomains.sbs/',
+  'https://awesomemoviesexplorer.nomoredomains.sbs/',
+  'http://awesomemoviesexplorer.nomoredomains.sbs/',
+];
 
 module.exports.corsRules = (req, res, next) => {
   const { origin } = req.headers;
