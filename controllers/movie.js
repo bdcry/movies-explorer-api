@@ -9,7 +9,7 @@ const NotFound = require('../utils/errors/NotFound'); // 404
 const { CORRECT_CODE, CREATE_CODE } = require('../utils/goodCodes'); // 200 201
 
 // создаёт фильм
-const createMovie = (req, res, next) => {
+module.exports.createMovie = (req, res, next) => {
   const {
     country,
     director,
@@ -62,7 +62,7 @@ const createMovie = (req, res, next) => {
 };
 
 // возвращает все сохранённые текущим пользователем фильмы
-const getMovies = (req, res, next) => {
+module.exports.getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
     .then((movies) => {
       if (!movies) {
@@ -74,7 +74,7 @@ const getMovies = (req, res, next) => {
 };
 
 // удаляет сохранённый фильм по id
-const deleteMovie = (req, res, next) => {
+module.exports.deleteMovie = (req, res, next) => {
   const { movieId } = req.params;
   const owner = req.user._id;
 
@@ -91,10 +91,4 @@ const deleteMovie = (req, res, next) => {
       throw new ForbiddenError('Действие недоступно');
     })
     .catch(next);
-};
-
-module.exports = {
-  createMovie,
-  getMovies,
-  deleteMovie,
 };

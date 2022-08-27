@@ -1,9 +1,7 @@
 // Массив доменов, с которых разрешены кросс-доменные запросы
-const allowedCors = [
-  'http://localhost:3000',
-];
+const allowedCors = ['http://localhost:3000'];
 
-const corsRules = (req, res, next) => {
+module.exports.corsRules = (req, res, next) => {
   const { origin } = req.headers;
   const { method } = req;
   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
@@ -20,8 +18,4 @@ const corsRules = (req, res, next) => {
   }
 
   return next();
-};
-
-module.exports = {
-  corsRules,
 };

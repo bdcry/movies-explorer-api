@@ -1,10 +1,7 @@
 const usersRouter = require('express').Router();
 const { validationPatchUserProfile } = require('../middlewares/validation');
 
-const {
-  patchUserProfile,
-  getUserAbout,
-} = require('../controllers/users');
+const { patchUserProfile, getUserAbout } = require('../controllers/users');
 
 // Получить свои данные
 usersRouter.get('/me', getUserAbout);
