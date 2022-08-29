@@ -7,12 +7,12 @@ const {
 const { createMovie, getMovies, deleteMovie } = require('../controllers/movie');
 
 // возвращает все сохранённые текущим пользователем фильмы
-moviesRouter.get('/', getMovies);
+moviesRouter.get('/movies', getMovies);
 
 // создаёт фильм
-moviesRouter.post('/', validationCreateMovie, createMovie);
+moviesRouter.post('/movies', validationCreateMovie, createMovie);
 
 // удаляет сохранённый фильм по id
-moviesRouter.delete('/:movieId', validationDeleteMovie, deleteMovie);
+moviesRouter.delete('/movies/:movieId', validationDeleteMovie, deleteMovie);
 
 module.exports = moviesRouter;

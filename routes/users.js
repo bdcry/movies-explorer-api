@@ -4,9 +4,9 @@ const { validationPatchUserProfile } = require('../middlewares/validation');
 const { patchUserProfile, getUserAbout } = require('../controllers/users');
 
 // получить свои данные
-usersRouter.get('/me', getUserAbout);
+usersRouter.get('/users/me', getUserAbout);
 
 // обновить профиль юзера
-usersRouter.patch('/me', validationPatchUserProfile, patchUserProfile);
+usersRouter.patch('/users/me', validationPatchUserProfile, patchUserProfile);
 
 module.exports = usersRouter;
