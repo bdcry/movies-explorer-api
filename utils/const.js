@@ -20,4 +20,7 @@ module.exports.messagesError = {
   // authorizationMessagesError
   authorization: 'Необходимо авторизоваться!',
   authorizationError: 'Похоже, что почта или пароль некорректные!',
+
+  // serverMessagesError
+  serverError: 'На сервере произошла техническая чоколадка, у нас лапки',
 };
