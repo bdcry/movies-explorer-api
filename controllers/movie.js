@@ -42,20 +42,7 @@ module.exports.createMovie = (req, res, next) => {
     movieId,
     owner,
   })
-    .then((movie) => res.status(CREATE_CODE).send({
-      _id: movie._id,
-      country: movie.country,
-      director: movie.director,
-      duration: movie.duration,
-      year: movie.year,
-      description: movie.description,
-      image: movie.image,
-      trailerLink: movie.trailerLink,
-      nameRU: movie.nameRU,
-      nameEN: movie.nameEN,
-      thumbnail: movie.thumbnail,
-      movieId: movie.movieId,
-    }))
+    .then((movie) => res.status(CREATE_CODE).send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequest(messagesError.validation));
@@ -69,7 +56,7 @@ module.exports.getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
     .then((movies) => {
       if (!movies) {
-        throw new NotFound(messagesError.notFound);
+        next(new NotFound(messagesError.notFound));
       }
       res.status(CORRECT_CODE).send(movies);
     })
@@ -83,7 +70,7 @@ module.exports.deleteMovie = (req, res, next) => {
 
   Movie.findById(movieId)
     .orFail(() => {
-      throw new NotFound(messagesError.notFoundMovieID);
+      next(new NotFound(messagesError.notFoundMovieID));
     })
     .then((movie) => {
       if (movie.owner.toString() === owner) {
@@ -91,7 +78,7 @@ module.exports.deleteMovie = (req, res, next) => {
           .then((deletedMovie) => res.status(CORRECT_CODE).send(deletedMovie))
           .catch(next);
       }
-      throw new ForbiddenError(messagesError.forbiddenError);
+      return next(new ForbiddenError(messagesError.forbiddenError));
     })
     .catch(next);
 };

@@ -36,16 +36,13 @@ module.exports.createUser = (req, res, next) => {
         })
         .catch((err) => {
           if (err.name === 'ValidationError') {
-            throw new BadRequest(messagesError.validation);
+            next(new BadRequest(messagesError.validation));
           }
           if (err.code === 11000) {
-            next(
-              new DuplicateConflictError(
-                messagesError.duplicateConflictError,
-              ),
-            );
+            next(new DuplicateConflictError(messagesError.duplicateConflictError));
+          } else {
+            next(err);
           }
-          next(err);
         });
     })
     .catch(next);
@@ -87,15 +84,15 @@ module.exports.patchUserProfile = (req, res, next) => {
     { new: true, runValidators: true },
   )
     .orFail(() => {
-      throw new NotFound(messagesError.notFoundUserID);
+      next(new NotFound(messagesError.notFoundUserID));
     })
     .then((user) => res.status(CORRECT_CODE).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        throw new BadRequest(messagesError.validation);
+        next(new BadRequest(messagesError.validation));
       }
       if (err.code === 11000) {
-        throw new DuplicateConflictError(messagesError.duplicateConflictError);
+        next(new DuplicateConflictError(messagesError.duplicateConflictError));
       }
       next(err);
     })
