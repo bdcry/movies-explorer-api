@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
+
+// error
 const AuthorizationError = require('../utils/errors/AuthorizationError');
+
+// erorr messages
+const { messagesError } = require('../utils/const');
 
 const userSchema = new mongoose.Schema(
   {
@@ -37,14 +42,14 @@ userSchema.statics.findUserByCredentials = function func(email, password) {
     .then((user) => {
       if (!user) {
         throw new AuthorizationError(
-          'Похоже, что почта или пароль некорректные!',
+          messagesError.authorizationError,
         );
       }
 
       return bcrypt.compare(password, user.password).then((matched) => {
         if (!matched) {
           throw new AuthorizationError(
-            'Похоже, что почта или пароль некорректные!',
+            messagesError.authorizationError,
           );
         }
 

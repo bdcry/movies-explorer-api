@@ -1,14 +1,18 @@
 const { celebrate, Joi } = require('celebrate');
 const isUrl = require('validator/lib/isURL');
 
+// error
 const BadRequest = require('../utils/errors/BadRequest');
+
+// erorr messages
+const { messagesError } = require('../utils/const');
 
 const validationUrl = (url) => {
   const validate = isUrl(url);
   if (validate) {
     return url;
   }
-  throw new BadRequest('Ошибка валидации');
+  throw new BadRequest(messagesError.validationError);
 };
 module.exports.validationCreateUser = celebrate({
   body: Joi.object().keys({

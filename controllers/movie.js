@@ -5,6 +5,9 @@ const ForbiddenError = require('../utils/errors/ForbiddenError'); // 403
 const BadRequest = require('../utils/errors/BadRequest'); // 400
 const NotFound = require('../utils/errors/NotFound'); // 404
 
+// erorr messages
+const { messagesError } = require('../utils/const');
+
 // good codes
 const { CORRECT_CODE, CREATE_CODE } = require('../utils/goodCodes'); // 200 201
 
@@ -54,8 +57,8 @@ module.exports.createMovie = (req, res, next) => {
       movieId: movie.movieId,
     }))
     .catch((err) => {
-      if (err.name === 'BadRequest') {
-        return next(new BadRequest('Заполните поля корректно'));
+      if (err.name === 'ValidationError') {
+        return next(new BadRequest(messagesError.validation));
       }
       return next(err);
     });
@@ -66,7 +69,7 @@ module.exports.getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
     .then((movies) => {
       if (!movies) {
-        throw new NotFound('Данные не найдены');
+        throw new NotFound(messagesError.notFound);
       }
       res.status(CORRECT_CODE).send(movies);
     })
@@ -80,7 +83,7 @@ module.exports.deleteMovie = (req, res, next) => {
 
   Movie.findById(movieId)
     .orFail(() => {
-      throw new NotFound('Фильм с таким ID не найден');
+      throw new NotFound(messagesError.notFoundMovieID);
     })
     .then((movie) => {
       if (movie.owner.toString() === owner) {
@@ -88,7 +91,7 @@ module.exports.deleteMovie = (req, res, next) => {
           .then((deletedMovie) => res.status(CORRECT_CODE).send(deletedMovie))
           .catch(next);
       }
-      throw new ForbiddenError('Действие недоступно');
+      throw new ForbiddenError(messagesError.forbiddenError);
     })
     .catch(next);
 };

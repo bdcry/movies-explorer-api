@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+// erorr messages
+const { messagesError } = require('../utils/const');
+
 const movieSchema = new mongoose.Schema(
   {
     country: {
@@ -29,7 +32,7 @@ const movieSchema = new mongoose.Schema(
         validator: (v) => /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.,~#?&//=!]*$)/.test(
           v,
         ),
-        message: 'Cсылка не подходит :(',
+        message: messagesError.validationUrl,
       },
     },
     trailerLink: {
@@ -39,7 +42,7 @@ const movieSchema = new mongoose.Schema(
         validator: (v) => /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.,~#?&//=!]*$)/.test(
           v,
         ),
-        message: 'Cсылка не подходит :(',
+        message: messagesError.validationUrl,
       },
     },
     thumbnail: {
@@ -49,7 +52,7 @@ const movieSchema = new mongoose.Schema(
         validator: (v) => /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.,~#?&//=!]*$)/.test(
           v,
         ),
-        message: 'Cсылка не подходит :(',
+        message: messagesError.validationUrl,
       },
     },
     owner: {

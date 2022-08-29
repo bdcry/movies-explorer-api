@@ -10,6 +10,9 @@ const AuthorizationError = require('../utils/errors/AuthorizationError'); // 401
 const NotFound = require('../utils/errors/NotFound'); // 404
 const DuplicateConflictError = require('../utils/errors/DuplicateConflictError'); // 409
 
+// erorr messages
+const { messagesError } = require('../utils/const');
+
 // good codes
 const { CORRECT_CODE, CREATE_CODE } = require('../utils/goodCodes'); // 200 201
 
@@ -32,13 +35,13 @@ module.exports.createUser = (req, res, next) => {
           });
         })
         .catch((err) => {
-          if (err.name === 'BadRequest') {
-            throw new BadRequest('Переданы неверные данные');
+          if (err.name === 'ValidationError') {
+            throw new BadRequest(messagesError.validation);
           }
           if (err.code === 11000) {
             next(
               new DuplicateConflictError(
-                'Указанный email давно отдыхает в базе данных, используйте другой email :)',
+                messagesError.duplicateConflictError,
               ),
             );
           }
@@ -63,7 +66,7 @@ module.exports.login = (req, res, next) => {
       res.status(CORRECT_CODE).send({ token });
     })
     .catch(() => {
-      next(new AuthorizationError('Неверные логин или пароль'));
+      next(new AuthorizationError(messagesError.authorizationError));
     });
 };
 
@@ -84,15 +87,15 @@ module.exports.patchUserProfile = (req, res, next) => {
     { new: true, runValidators: true },
   )
     .orFail(() => {
-      throw new NotFound('Нет пользователя с таким i');
+      throw new NotFound(messagesError.notFoundUserID);
     })
     .then((user) => res.status(CORRECT_CODE).send(user))
     .catch((err) => {
-      if (err.name === 'BadRequest' || err.name === 'CastError') {
-        throw new BadRequest('Неверно указан id пользователя');
+      if (err.name === 'ValidationError' || err.name === 'CastError') {
+        throw new BadRequest(messagesError.validation);
       }
       if (err.code === 11000) {
-        throw new DuplicateConflictError('Такой email уже занят :(');
+        throw new DuplicateConflictError(messagesError.duplicateConflictError);
       }
       next(err);
     })
