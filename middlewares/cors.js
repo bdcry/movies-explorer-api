@@ -1,10 +1,21 @@
 // массив доменов, с которых разрешены кросс-доменные запросы
 const allowedCors = [
+  'https://api.nomoreparties.co/beatfilm-movies',
   'http://localhost:3000',
+  'http://localhost:3004',
   'https://api.awesomemoviesexplorer.students.nomoredomains.sbs/',
   'http://api.awesomemoviesexplorer.students.nomoredomains.sbs/',
   'https://awesomemoviesexplorer.nomoredomains.sbs/',
   'http://awesomemoviesexplorer.nomoredomains.sbs/',
+  'https://api.awesomemoviesexplorer.students.nomoredomains.sbs',
+  'http://api.awesomemoviesexplorer.students.nomoredomains.sbs',
+  'https://awesomemoviesexplorer.nomoredomains.sbs',
+  'http://awesomemoviesexplorer.nomoredomains.sbs',
+  '51.250.48.228',
+  'http://51.250.48.228/',
+  'https://51.250.48.228/',
+  'http://51.250.48.228',
+  'https://51.250.48.228',
 ];
 
 module.exports.corsRules = (req, res, next) => {
