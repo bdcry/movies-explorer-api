@@ -11,11 +11,11 @@ const allowedCors = [
   'http://api.awesomemoviesexplorer.students.nomoredomains.sbs',
   'https://awesomemoviesexplorer.nomoredomains.sbs',
   'http://awesomemoviesexplorer.nomoredomains.sbs',
-  '51.250.48.228',
-  'http://51.250.48.228/',
-  'https://51.250.48.228/',
-  'http://51.250.48.228',
-  'https://51.250.48.228',
+  '51.250.107.2',
+  'http://51.250.107.2/',
+  'https://51.250.107.2/',
+  'http://51.250.107.2',
+  'https://51.250.107.2',
 ];
 
 module.exports.corsRules = (req, res, next) => {
