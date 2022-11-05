@@ -57,6 +57,7 @@ const movieSchema = new mongoose.Schema(
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: 'user',
       required: [true, 'Это обязательное поле'], // обязательное поле
     },
     movieId: {

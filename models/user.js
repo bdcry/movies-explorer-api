@@ -5,7 +5,7 @@ const validator = require('validator');
 // error
 const AuthorizationError = require('../utils/errors/AuthorizationError');
 
-// erorr messages
+// error messages
 const { messagesError } = require('../utils/const');
 
 const userSchema = new mongoose.Schema(
